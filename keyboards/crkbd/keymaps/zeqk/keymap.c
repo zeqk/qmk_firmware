@@ -19,47 +19,62 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 
 enum layer_names {
-  _DVORAK,
+  _COLEMAK,
   _QWERTY,
+  _DVORAK,
   _NUM,
   _SYMBOL,
-  _FKEYS
+  _FKEYS,
+  _SWITCH
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-        [_DVORAK] = LAYOUT_split_3x6_3(
-            //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-                 KC_TAB, KC_QUOT, KC_COMM,  KC_DOT,    KC_P,    KC_Y,                         KC_F,    KC_G,    KC_C,    KC_R,    KC_L, KC_BSPC,
-            //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-    LSFT_T(KC_CAPSLOCK),    KC_A,    KC_O,    KC_E,    KC_U,    KC_I,                         KC_D,    KC_H,    KC_T,    KC_N,    KC_S, KC_SLSH,
-            //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-                KC_LGUI, KC_SCLN,    KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,   TT(4),
-            //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                    LM(1,MOD_LCTL),TT(2),MT(MOD_LCTL, KC_SPC),  KC_SFTENT,   TT(3), KC_RALT
-                                                //`--------------------------'  `--------------------------'
 
+        [_COLEMAK] = LAYOUT_split_3x6_3(
+        //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+    LT(_NUM,KC_TAB),     KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,             LT(_SWITCH,KC_J),    KC_L,    KC_U,    KC_Y, KC_SCLN, KC_BSPC,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+LSFT_T(KC_CAPSLOCK),    KC_A,    KC_R,    KC_S,    KC_T,    KC_D,                         KC_H,    KC_N,    KC_E,    KC_I,    KC_O, KC_QUOT,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+            KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B, 						  KC_K,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, MO(_FKEYS),
+        //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                                KC_LGUI,   TT(_NUM),  KC_SPC, RSFT_T(KC_ENT),TT(_SYMBOL), KC_RALT
+                                            //`--------------------------'  `--------------------------'
         ),
 
         [_QWERTY] = LAYOUT_split_3x6_3(
         //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-            _______,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  _______,
+    LT(_NUM,KC_TAB),    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,             LT(_SWITCH,KC_Y),    KC_U,    KC_I,    KC_O,   KC_P,  KC_BSPC,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-            _______,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_QUOT, _______,
+LSFT_T(KC_CAPSLOCK),    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_QUOT, KC_QUOT,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-            _______,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SCLN, _______,
+            KC_LCTL,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, MO(_FKEYS),
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                               KC_LCTRL, _______, _______,    _______, _______, _______
+                                               KC_LGUI, TT(_NUM),  KC_SPC, RSFT_T(KC_ENT), TT(_SYMBOL), KC_RALT
                                             //`--------------------------'  `--------------------------'
+
+        ),
+
+        [_DVORAK] = LAYOUT_split_3x6_3(
+            //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+        LT(_NUM,KC_TAB), KC_QUOT, KC_COMM,  KC_DOT,    KC_P,    KC_Y,             LT(_SWITCH,KC_F),    KC_G,    KC_C,    KC_R,    KC_L, KC_BSPC,
+            //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+    LSFT_T(KC_CAPSLOCK),    KC_A,    KC_O,    KC_E,    KC_U,    KC_I,                         KC_D,    KC_H,    KC_T,    KC_N,    KC_S, KC_SLSH,
+            //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+                KC_LCTL, KC_SCLN,    KC_Q,    KC_J,    KC_K,    KC_X,                         KC_B,    KC_M,    KC_W,    KC_V,    KC_Z, MO(_FKEYS),
+            //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                           KC_LGUI,TT(_NUM),  KC_SPC,      RSFT_T(KC_ENT), TT(_SYMBOL), KC_RALT
+                                                //`--------------------------'  `--------------------------'
 
         ),
 
         [_NUM] = LAYOUT_split_3x6_3(
         //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-            _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
+             KC_DEL,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, _______,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-            _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_PSCREEN,                   KC_LEFT,   KC_UP,KC_RIGHT, XXXXXXX, KC_HOME, _______,
+            _______, KC_PSCREEN, XXXXXXX, XXXXXXX, KC_WH_U, KC_PGUP,                   KC_LEFT,   KC_UP,KC_RIGHT, XXXXXXX, KC_HOME, _______,
         //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-            _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN, XXXXXXX, XXXXXXX,  KC_END, _______,
+            _______, XXXXXXX, XXXXXXX, XXXXXXX, KC_WH_D, KC_PGDN,                      KC_LEFT, KC_DOWN, XXXXXXX, XXXXXXX,  KC_END, _______,
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                                 _______, _______, _______,    _______, _______, _______
                                             //`--------------------------'  `--------------------------'
@@ -87,6 +102,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                                 _______, _______, _______,    _______, _______, _______
                                             //`--------------------------'  `--------------------------'
+        ),
+
+        // layer switcher
+        [_SWITCH] = LAYOUT_split_3x6_3(
+        //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+            XXXXXXX,TO(_NUM),TO(_SYMBOL),TO(_FKEYS),XXXXXXX,XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   RESET,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+            XXXXXXX, XXXXXXX, XXXXXXX, DF(_COLEMAK), DF(_QWERTY), DF(_DVORAK),         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, EEP_RST,
+        //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                                XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX
+                                            //`--------------------------'  `--------------------------'
         )
 };
 
@@ -100,35 +128,43 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
   return rotation;
 }
 
-#define L_DVORAK 0
-#define L_QWERTY 2
-#define L_NUM 4
-#define L_SYM 8
-#define L_FKEYS 16
+#define L_COLEMAK 0
+#define L_NUM 2
+#define L_SYMBOL 4
+#define L_FKEYS 8
+#define L_SWITCH 16
 
 void oled_render_layer_state(void) {
-    oled_write_P(PSTR("Layer: "), false);
-    switch (layer_state) {
-        case L_DVORAK:
-            oled_write_ln_P(PSTR("DVORAK"), false);
-            break;
-        case L_QWERTY:
-            oled_write_ln_P(PSTR("QWERTY"), false);
-            break;
-        case L_NUM:
-            oled_write_ln_P(PSTR("Numbers"), false);
-            break;
-        case L_SYM:
-            oled_write_ln_P(PSTR("Symbols"), false);
-            break;
-        case L_FKEYS:
-        case L_FKEYS|L_NUM:
-        case L_FKEYS|L_SYM:
-        case L_FKEYS|L_NUM|L_SYM:
-            oled_write_ln_P(PSTR("F Keys"), false);
-            break;
+  char string [24];
+  switch (get_highest_layer(default_layer_state|layer_state))
+  {
+      case _COLEMAK:
+        oled_write_ln_P(PSTR("Layer: COLEMAK"),false);
+        break;
+      case _QWERTY:
+        oled_write_ln_P(PSTR("Layer: QWERTY"),false);
+        break;
+      case _DVORAK:
+        oled_write_ln_P(PSTR("Layer: DVORAK"),false);
+        break;
+      case _NUM:
+        oled_write_ln_P(PSTR("Layer: NUMBERS"),false);
+        break;
+      case _SYMBOL:
+        oled_write_ln_P(PSTR("Layer: SYMBOLS"),false);
+        break;
+      case _FKEYS:
+        oled_write_ln_P(PSTR("Layer: F KEYS"),false);
+        break;
+      case _SWITCH:
+        oled_write_ln_P(PSTR("Layer: SWITCH"),false);
+        break;
+      default:
+        snprintf(string, sizeof(string), "%ld",layer_state);
+        oled_write_P(PSTR("Layer: Undef-"),false);
+        oled_write_ln(string, false);
     }
-}
+ }
 
 
 char keylog_str[24] = {};
@@ -142,12 +178,14 @@ const char code_to_name[60] = {
     '#', ';', '\'', '`', ',', '.', '/', ' ', ' ', ' '};
 
 void set_keylog(uint16_t keycode, keyrecord_t *record) {
-  char name = ' ';
+    char name = ' ';
     if ((keycode >= QK_MOD_TAP && keycode <= QK_MOD_TAP_MAX) ||
-        (keycode >= QK_LAYER_TAP && keycode <= QK_LAYER_TAP_MAX)) { keycode = keycode & 0xFF; }
-  if (keycode < 60) {
-    name = code_to_name[keycode];
-  }
+        (keycode >= QK_LAYER_TAP && keycode <= QK_LAYER_TAP_MAX)) { 
+            keycode = keycode & 0xFF; 
+    }
+    if (keycode < 60) {
+        name = code_to_name[keycode];
+    }
 
   // update keylog
   snprintf(keylog_str, sizeof(keylog_str), "%dx%d, k%2d : %c",
@@ -202,7 +240,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 // Key overrides
 
-const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPACE, KC_DELETE);
+const key_override_t delete_key_override = ko_make_basic(MOD_MASK_SHIFT, KC_BSPACE, KC_DEL);
 
 // This globally defines all key overrides to be used
 const key_override_t **key_overrides = (const key_override_t *[]){
